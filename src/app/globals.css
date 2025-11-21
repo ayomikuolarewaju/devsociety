@@ -205,7 +205,7 @@
     }
 
     .details {
-      @apply flex w-full flex-col lg:flex-row gap-12 items-start mt-12 max-lg:items-center;
+      @apply flex w-[900px] flex-col gap-12 items-start mt-12 max-lg:items-center;
 
       .content {
         @apply flex flex-[2] flex-col gap-8 max-lg:w-full;
