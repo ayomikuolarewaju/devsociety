@@ -27,6 +27,9 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+    let tags = JSON.parse(formData.get("tags") as string);
+    let agenda = JSON.parse(formData.get("agenda") as string);
+
     const imageArray = await file.arrayBuffer();
     const imageBuffer = Buffer.from(imageArray);
 
@@ -44,7 +47,11 @@ export async function POST(req: NextRequest) {
 
     event.image = (imageData as { secure_url: string }).secure_url;
 
-    const createdEvent = await Event.create(event);
+    const createdEvent = await Event.create({
+      ...event,
+      tags: tags,
+      agenda: agenda,
+    });
     return NextResponse.json(
       {
         message: "Event created successfully",
@@ -64,17 +71,20 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {   
+export async function GET() {
+  try {
+    await connectDB();
 
-  try{
+    const event = await Event.find().sort({ createdAt: -1 });
 
-    await connectDB()
-
-    const event = await Event.find().sort({createdAt:-1})
-
-    return NextResponse.json({message:"Events fetch successfully", event},{status:200})
-
-  }catch(e){
-    return NextResponse.json({message:'Event fetching failed',error:e},{status:500})
+    return NextResponse.json(
+      { message: "Events fetch successfully", event },
+      { status: 200 }
+    );
+  } catch (e) {
+    return NextResponse.json(
+      { message: "Event fetching failed", error: e },
+      { status: 500 }
+    );
   }
 }

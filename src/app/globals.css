@@ -274,4 +274,23 @@
       }
     }
   }
+  #create-event {
+    @apply flex flex-col gap-6 w-full items-center justify-center;
+
+    form {
+      @apply flex flex-col gap-6 w-full items-center justify-center;
+
+      div {
+        @apply flex flex-col gap-2;
+
+        input {
+          @apply bg-dark-200 rounded-[6px] px-5 py-2.5 w-[700px];
+        }
+      }
+
+      button {
+        @apply bg-primary hover:bg-primary/90 w-[200px] cursor-pointer items-center justify-center rounded-[6px] px-4 py-2.5 text-lg font-semibold text-black;
+      }
+    }
+  }  
 }
